@@ -111,7 +111,7 @@ def main():
         yolo_model = load_yolo_model(yolo_model_path)  # 重新加载选中的YOLO模型
 
         st.markdown("---")
-        ocr_prompt = st.text_input("OCR提示词",
+        ocr_prompt = st.text_area("OCR提示词",
                                    value="请提取并输出图像中的所有文字，包括手写文字、印刷文字以及可能存在的多语言文字。输出时请确保文字的完整性和可读性。如果图像中存在模糊或难以识别的文字，请尽量提供可能的推测结果",
                                    help="输入给OCR模型的提示指令")
         st.markdown("---")
