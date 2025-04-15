@@ -26,7 +26,8 @@ def load_model(ckpt_path):
     Load UVDocnet model.
     """
     model = UVDocnet(num_filter=32, kernel_size=5)
-    ckpt = torch.load(ckpt_path)
+    ckpt = torch.load(ckpt_path, map_location=torch.device('cpu'))
+
     model.load_state_dict(ckpt["model_state"])
     return model
 
