@@ -87,8 +87,12 @@ def main():
 
     # 初始化模型
     with st.spinner("正在初始化模型..."):
+        # model_path = os.path.join(
+        #     r"E:\PythonProject1\UVDoc-main\myfile\visualize\app_data\models\unwrap_model\best_model.pkl")
         model_path = os.path.join(ROOT,"app_data/models/unwrap_model/best_model.pkl")
         model = load_model(model_path)
+        # yolo_model_path = os.path.join(
+        #     r"E:\PythonProject1\UVDoc-main\myfile\visualize\app_data\models\cls_model\best.pt")
         yolo_model_path = os.path.join(ROOT,"app_data/models/cls_model/best.pt")
         yolo_model = load_yolo_model(yolo_model_path)
 
@@ -113,40 +117,27 @@ def main():
         st.markdown("---")
         st.info("使用说明：\n1. 上传图片\n2. 选择处理功能\n3. 查看结果")
 
-        # 添加示例图片选择功能
-        example_images_folder = os.path.join(ROOT, "app_data/benchmark")
-        example_images = [f for f in os.listdir(example_images_folder) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
-        selected_example_image = st.selectbox("选择示例图片", ["无"] + example_images)
-        if selected_example_image != "无":
-            example_image_path = os.path.join(example_images_folder, selected_example_image)
-            st.session_state.example_image_path = example_image_path
-        else:
-            st.session_state.pop("example_image_path", None)
-
     # 主内容区域
     uploaded_file = st.file_uploader("上传文档图片", type=["png", "jpg", "jpeg"],
                                      help="支持PNG/JPG/JPEG格式")
 
-    # 确定当前使用的图片路径
-    current_image_path = None
-    if "example_image_path" in st.session_state:
-        current_image_path = st.session_state.example_image_path
-    elif uploaded_file is not None:
+    if uploaded_file is not None:
+        # 保存上传的图片
         original_img_path = os.path.join(ROOT,"app_data/log/temp.png")
         with open(original_img_path, "wb") as f:
             f.write(uploaded_file.getvalue())
-        current_image_path = original_img_path
 
-    if current_image_path is not None:
         # 三列布局容器
         col1, col2, col3 = st.columns(3)
 
         # 第一列：原始图片
         with col1:
             st.subheader("原始图片")
-            st.image(current_image_path,
+            st.image(uploaded_file,
                      use_container_width=True,
                      caption="上传的原始文档图片")
+
+
 
         # 第三列：检测结果
         with col2:
@@ -157,6 +148,9 @@ def main():
                          use_container_width=True,
                          caption="文档检测结果",
                          output_format="PNG")
+                # 分析详情面板
+                # with st.expander("📊 检测详情"):
+                #     st.code("检测置信度：92%\n分类结果：正式合同文档")
             else:
                 st.info("点击下方按钮进行文档检测")
 
@@ -187,7 +181,7 @@ def main():
             if st.button("文档校正", help="进行文档几何校正处理"):
                 with st.spinner("正在校正文档..."):
                     try:
-                        processed_path = unwarp_img(selected_model_path, current_image_path, IMG_SIZE, model)
+                        processed_path = unwarp_img(selected_model_path, original_img_path, IMG_SIZE, model)
                         st.session_state.processed_img_path = processed_path
                         st.rerun()
                     except Exception as e:
@@ -198,8 +192,8 @@ def main():
                 if yolo_model is not None:
                     with st.spinner("正在分析文档..."):
                         try:
-                            results = yolo_model(current_image_path)
-                            annotated_img = plot_results(cv2.imread(current_image_path), results)
+                            results = yolo_model(original_img_path)
+                            annotated_img = plot_results(cv2.imread(original_img_path), results)
                             st.session_state.annotated_img = annotated_img
                             st.rerun()
                         except Exception as e:
