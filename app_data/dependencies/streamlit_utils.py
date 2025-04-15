@@ -14,7 +14,7 @@
 #
 # sys.path.append(r'E:\PythonProject1\UVDoc-main\myfile\visualize\app_data\dependencies')
 # from utils import IMG_SIZE, bilinear_unwarping, load_model
-# 
+#
 # # ROOT = os.path.dirname(os.path.abspath(__file__))
 #
 #
