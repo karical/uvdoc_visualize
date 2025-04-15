@@ -103,7 +103,7 @@ def main():
         model_files = [f for f in os.listdir(model_folder)]
         selected_model = st.selectbox("选择校正模型", model_files, index=0)
         selected_model_path = os.path.join(model_folder, selected_model)
-        
+
         yolo_model_folder = os.path.join(ROOT,"app_data/models/cls_model")
         yolo_model_files = [f for f in os.listdir(yolo_model_folder)]
         selected_yolo_model = st.selectbox("选择分类模型", yolo_model_files, index=0)
@@ -661,7 +661,7 @@ def plot_results(cv_img, results):
     top1_conf = probs.top1conf.item()  # 获取置信度
 
     # 在图像中心添加文字
-    text = f"{top1_label} "
+    text = f"{top1_label} :{top1_conf:.2f}"
     font_scale = 2
     thickness = 4
 
