@@ -13,7 +13,7 @@ import streamlit as st
 import os
 os.environ["STREAMLIT_SERVER_ENABLE_WATCH_DOG"] = "false"
 ROOT = os.path.dirname(os.path.abspath(__file__))
-# E:\PythonProject1\UVDoc-main\myfile\visualize\streamlit
+
 # 添加自定义CSS样式
 st.markdown("""
 <style>
@@ -55,16 +55,17 @@ def main():
     with st.spinner("正在初始化模型..."):
         # model_path = os.path.join(
         #     r"E:\PythonProject1\UVDoc-main\myfile\visualize\app_data\models\unwrap_model\best_model.pkl")
-        model_path = os.path.join(ROOT,"")
+        model_path = os.path.join(ROOT,"app_data/models/unwarp_model/best_model.pkl")
         model = load_model(model_path)
-        yolo_model_path = os.path.join(
-            r"E:\PythonProject1\UVDoc-main\myfile\visualize\app_data\models\cls_model\best.pt")
+        # yolo_model_path = os.path.join(
+        #     r"E:\PythonProject1\UVDoc-main\myfile\visualize\app_data\models\cls_model\best.pt")
+        yolo_model_path = os.path.join(ROOT,"app_data/models/cls_model/best.pt")
         yolo_model = load_yolo_model(yolo_model_path)
 
     # 侧边栏配置
     with st.sidebar:
         st.header("配置选项")
-        model_folder = os.path.join(r"E:\PythonProject1\UVDoc-main\myfile\visualize\app_data\models\unwrap_model")
+        model_folder = os.path.join(ROOT,"/app_data/models/unwarp_model")
         model_files = [f for f in os.listdir(model_folder)]
         selected_model = st.selectbox("选择校正模型", model_files, index=0)
         selected_model_path = os.path.join(model_folder, selected_model)
@@ -82,7 +83,7 @@ def main():
 
     if uploaded_file is not None:
         # 保存上传的图片
-        original_img_path = os.path.join(r"E:\PythonProject1\UVDoc-main\myfile\visualize\app_data\log\temp.png")
+        original_img_path = os.path.join(ROOT,"/app_data/log/temp.png")
         with open(original_img_path, "wb") as f:
             f.write(uploaded_file.getvalue())
 
@@ -158,27 +159,27 @@ def main():
                         except Exception as e:
                             st.error(f"检测失败: {str(e)}")
 
-        # OCR功能区域
-        st.markdown("---")
-        if st.button("📖 执行OCR识别", use_container_width=True):
-            if "processed_img_path" in st.session_state:
-                with st.spinner("正在识别文字..."):
-                    ocr_result = perform_ocr(ocr_prompt, st.session_state.processed_img_path)
-                    st.session_state.ocr_result = ocr_result
-                    st.rerun()
-
-        if "ocr_result" in st.session_state:
-            st.subheader("OCR识别结果")
-            with st.container():
-                st.markdown(f'<div class="result-box">{st.session_state.ocr_result}</div>',
-                            unsafe_allow_html=True)
-                if st.button("📋 复制到剪贴板", use_container_width=True):
-                    js = f"""
-                    navigator.clipboard.writeText(`{st.session_state.ocr_result}`);
-                    setTimeout(() => alert("复制成功！"), 100);
-                    """
-                    html = f'<script>{js}</script>'
-                    st.components.v1.html(html, height=0)
+        # # OCR功能区域
+        # st.markdown("---")
+        # if st.button("📖 执行OCR识别", use_container_width=True):
+        #     if "processed_img_path" in st.session_state:
+        #         with st.spinner("正在识别文字..."):
+        #             ocr_result = perform_ocr(ocr_prompt, st.session_state.processed_img_path)
+        #             st.session_state.ocr_result = ocr_result
+        #             st.rerun()
+        #
+        # if "ocr_result" in st.session_state:
+        #     st.subheader("OCR识别结果")
+        #     with st.container():
+        #         st.markdown(f'<div class="result-box">{st.session_state.ocr_result}</div>',
+        #                     unsafe_allow_html=True)
+        #         if st.button("📋 复制到剪贴板", use_container_width=True):
+        #             js = f"""
+        #             navigator.clipboard.writeText(`{st.session_state.ocr_result}`);
+        #             setTimeout(() => alert("复制成功！"), 100);
+        #             """
+        #             html = f'<script>{js}</script>'
+        #             st.components.v1.html(html, height=0)
 
 
 if __name__ == "__main__":
