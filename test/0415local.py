@@ -192,27 +192,27 @@ def main():
                         except Exception as e:
                             st.error(f"检测失败: {str(e)}")
 
-        # # OCR功能区域
-        # st.markdown("---")
-        # if st.button("📖 执行OCR识别", use_container_width=True):
-        #     if "processed_img_path" in st.session_state:
-        #         with st.spinner("正在识别文字..."):
-        #             ocr_result = perform_ocr(ocr_prompt, st.session_state.processed_img_path)
-        #             st.session_state.ocr_result = ocr_result
-        #             st.rerun()
-        #
-        # if "ocr_result" in st.session_state:
-        #     st.subheader("OCR识别结果")
-        #     with st.container():
-        #         st.markdown(f'<div class="result-box">{st.session_state.ocr_result}</div>',
-        #                     unsafe_allow_html=True)
-        #         if st.button("📋 复制到剪贴板", use_container_width=True):
-        #             js = f"""
-        #             navigator.clipboard.writeText(`{st.session_state.ocr_result}`);
-        #             setTimeout(() => alert("复制成功！"), 100);
-        #             """
-        #             html = f'<script>{js}</script>'
-        #             st.components.v1.html(html, height=0)
+        # OCR功能区域(本地)
+        st.markdown("---")
+        if st.button("📖 执行OCR识别", use_container_width=True):
+            if "processed_img_path" in st.session_state:
+                with st.spinner("正在识别文字..."):
+                    ocr_result = perform_ocr(ocr_prompt, st.session_state.processed_img_path)
+                    st.session_state.ocr_result = ocr_result
+                    st.rerun()
+
+        if "ocr_result" in st.session_state:
+            st.subheader("OCR识别结果")
+            with st.container():
+                st.markdown(f'<div class="result-box">{st.session_state.ocr_result}</div>',
+                            unsafe_allow_html=True)
+                if st.button("📋 复制到剪贴板", use_container_width=True):
+                    js = f"""
+                    navigator.clipboard.writeText(`{st.session_state.ocr_result}`);
+                    setTimeout(() => alert("复制成功！"), 100);
+                    """
+                    html = f'<script>{js}</script>'
+                    st.components.v1.html(html, height=0)
 
 def conv3x3(in_channels, out_channels, kernel_size, stride=1):
     return nn.Conv2d(
