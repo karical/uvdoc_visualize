@@ -3,3 +3,4 @@ streamlit>=1.44.1
 numpy>=1.21.0
 torch
 ultralytics
+ollama
