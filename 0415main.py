@@ -111,7 +111,6 @@ def main():
                                    value="请提取并输出图像中的所有文字，包括手写文字、印刷文字以及可能存在的多语言文字。输出时请确保文字的完整性和可读性。如果图像中存在模糊或难以识别的文字，请尽量提供可能的推测结果",
                                    help="输入给OCR模型的提示指令")
         st.markdown("---")
-        st.info("使用说明：\n1. 上传图片\n2. 选择处理功能\n3. 查看结果")
 
         # 添加示例图片选择功能
         example_images_folder = os.path.join(ROOT, "app_data/benchmark")
@@ -122,6 +121,8 @@ def main():
             st.session_state.example_image_path = example_image_path
         else:
             st.session_state.pop("example_image_path", None)
+
+        st.info("使用说明：\n1. 上传图片\n2. 选择处理功能\n3. 查看结果")
 
     # 主内容区域
     uploaded_file = st.file_uploader("上传文档图片", type=["png", "jpg", "jpeg"],
