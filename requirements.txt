@@ -1,5 +1,5 @@
-opencv-headless
+opencv-python-headless>=4.5.1
+streamlit>=1.44.1
+numpy>=1.21.0
 torch
-streamlit
-numpy
 ultralytics
