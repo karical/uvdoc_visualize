@@ -103,6 +103,12 @@ def main():
         model_files = [f for f in os.listdir(model_folder)]
         selected_model = st.selectbox("选择校正模型", model_files, index=0)
         selected_model_path = os.path.join(model_folder, selected_model)
+        
+        yolo_model_folder = os.path.join(ROOT,"app_data/models/cls_model")
+        yolo_model_files = [f for f in os.listdir(yolo_model_folder)]
+        selected_yolo_model = st.selectbox("选择分类模型", yolo_model_files, index=0)
+        yolo_model_path = os.path.join(yolo_model_folder, selected_yolo_model)
+        yolo_model = load_yolo_model(yolo_model_path)  # 重新加载选中的YOLO模型
 
         st.markdown("---")
         ocr_prompt = st.text_input("OCR提示词",
