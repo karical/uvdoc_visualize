@@ -55,7 +55,7 @@ def main():
     with st.spinner("正在初始化模型..."):
         # model_path = os.path.join(
         #     r"E:\PythonProject1\UVDoc-main\myfile\visualize\app_data\models\unwrap_model\best_model.pkl")
-        model_path = os.path.join(ROOT,"app_data/models/unwarp_model/best_model.pkl")
+        model_path = os.path.join(ROOT,"app_data/models/unwrap_model/best_model.pkl")
         model = load_model(model_path)
         # yolo_model_path = os.path.join(
         #     r"E:\PythonProject1\UVDoc-main\myfile\visualize\app_data\models\cls_model\best.pt")
@@ -65,7 +65,7 @@ def main():
     # 侧边栏配置
     with st.sidebar:
         st.header("配置选项")
-        model_folder = os.path.join(ROOT,"/app_data/models/unwarp_model")
+        model_folder = os.path.join(ROOT,"app_data/models/unwrap_model")
         model_files = [f for f in os.listdir(model_folder)]
         selected_model = st.selectbox("选择校正模型", model_files, index=0)
         selected_model_path = os.path.join(model_folder, selected_model)
@@ -83,7 +83,7 @@ def main():
 
     if uploaded_file is not None:
         # 保存上传的图片
-        original_img_path = os.path.join(ROOT,"/app_data/log/temp.png")
+        original_img_path = os.path.join(ROOT,"app_data/log/temp.png")
         with open(original_img_path, "wb") as f:
             f.write(uploaded_file.getvalue())
 

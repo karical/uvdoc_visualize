@@ -3,7 +3,7 @@ import os
 import torch
 import torch.nn.functional as F
 
-from model import UVDocnet
+from app_data.dependencies.model import UVDocnet
 
 IMG_SIZE = [488, 712]
 GRID_SIZE = [45, 31]
