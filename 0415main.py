@@ -134,7 +134,7 @@ def main():
         with col1:
             st.subheader("原始图片")
             st.image(uploaded_file,
-                     use_column_width=True,
+                     use_container_width=True,
                      caption="上传的原始文档图片")
 
 
@@ -145,7 +145,7 @@ def main():
             if "annotated_img" in st.session_state:
                 st.image(st.session_state.annotated_img,
                          channels="BGR",
-                         use_column_width=True,
+                         use_container_width=True,
                          caption="文档检测结果",
                          output_format="PNG")
                 # 分析详情面板
@@ -159,7 +159,7 @@ def main():
             st.subheader("校正结果")
             if "processed_img_path" in st.session_state:
                 st.image(st.session_state.processed_img_path,
-                         use_column_width=True,
+                         use_container_width=True,
                          caption="文档校正结果")
                 # 下载按钮
                 with open(st.session_state.processed_img_path, "rb") as f:
