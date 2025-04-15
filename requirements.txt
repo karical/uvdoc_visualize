@@ -5,3 +5,4 @@ torch
 ultralytics
 ollama
 opencv-python-headless
+opencv-python
