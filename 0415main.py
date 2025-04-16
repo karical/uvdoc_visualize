@@ -182,7 +182,7 @@ def main():
                 st.info("点击下方按钮进行文档校正")
 
         # 功能按钮区域
-        st.markdown("---")
+        
         btn_col1, btn_col2, _ = st.columns([1, 1, 4])
         with btn_col1:
             if st.button("文档校正", help="进行文档几何校正处理"):
